@@ -13,8 +13,9 @@ exports.Letter = function (l) {
   this.checkGuess = function (guess) {
     if (guess.toUpperCase() === value) {
       isGuessed = true;
+      return true; // good guess
     }
-    return isGuessed;    
+    return false;  // you weren't correct this time
   };
 
   this.toString = function () {

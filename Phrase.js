@@ -17,6 +17,15 @@ exports.Phrase = function (p) {
         return guessIsCorrect;
     }
 
+    this.isPuzzleFinished = function () {
+        for (let i = 0; i < letterArray.length; i++) {
+            if (!letterArray[i].isLetterGuessed()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
     this.toString = function () {
         let str = "";
         for (let i = 0; i < phrase.length; i++) {
