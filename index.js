@@ -73,6 +73,7 @@ function getUserInput() {
 
         if (wordPuzzle.isPuzzleFinished()) {
             console.log(`Congratulations!  You successfully solved ${word}.\n`);
+            wouldYouLikeToPlayAgain();
             return;
         }
         else if (isGoodGuess) {
@@ -91,9 +92,31 @@ function getUserInput() {
             }
             else {
                 console.log(`YOU LOSE!  The puzzle was ${word}.\n`);
+                wouldYouLikeToPlayAgain();
                 return;
             }
         }
+    });
+}
+
+function wouldYouLikeToPlayAgain () {
+    const schema = {
+        properties: {
+            yesOrNo: {
+                type: 'string', 
+                description: 'Would you like to play again? Y or N:',
+                pattern: /^[ynYN]$/,
+                message: 'Input must be only Y or N.',
+                required: true
+            }
+        }
+    };
+
+    prompt.get(schema, function (err, result) {
+
+        if (result.yesOrNo.toUpperCase() == "Y") {
+            init();
+        } 
     });
 }
 
