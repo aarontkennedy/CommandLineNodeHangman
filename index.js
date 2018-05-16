@@ -4,7 +4,11 @@ const prompt = require('prompt');
 //
 // Start the prompt
 //
+prompt.colors = false;
+prompt.message = "";
+prompt.delimiter = "";
 prompt.start();
+
 
 // a puzzle object, essentially an array with the ability to return 
 // random member of the list
@@ -36,7 +40,7 @@ function Puzzles() {
 }
 
 Puzzles.prototype.getRandom = function () {
-    return this.words[Math.floor(Math.random() * this.words.length)];
+    return this.words[Math.floor(Math.random() * this.words.length)].toUpperCase();
 };
 
 const puzzles = new Puzzles();
@@ -48,19 +52,32 @@ let wordPuzzle = null;
 
 //
 // Get letter input and check it
-function getUserInput () {
-    prompt.get(['Letter'], function (err, result) {
+function getUserInput() {
+
+    const schema = {
+        properties: {
+            Letter: {
+                type: 'string', 
+                description: 'Pick a letter:',
+                pattern: /^[a-zA-Z]$/,
+                message: 'Input must be only single letters.',
+                required: true
+            }
+        }
+    };
+
+    prompt.get(schema, function (err, result) {
         //console.log('  Letter: ' + result.Letter);
 
         let isGoodGuess = wordPuzzle.checkGuess(result.Letter);
 
         if (wordPuzzle.isPuzzleFinished()) {
-            console.log(`Congratulations!  You successfully solved ${word}.`);
+            console.log(`Congratulations!  You successfully solved ${word}.\n`);
             return;
         }
         else if (isGoodGuess) {
             console.log(`${result.Letter} is correct.`);
-            console.log(`${wordPuzzle}`);
+            console.log(`${wordPuzzle}\n`);
             getUserInput();
         }
         else {
@@ -69,14 +86,13 @@ function getUserInput () {
             if (numIncorrect < maxIncorrect) {
                 console.log(`${wordPuzzle}`);
                 let guessesLeft = maxIncorrect - numIncorrect;
-                console.log(`You only have ${guessesLeft} of guesses left.`);
+                console.log(`You only have ${guessesLeft} of guesses left.\n`);
                 getUserInput();
             }
             else {
-                console.log(`YOU LOSE!  The puzzle was ${word}.`);
+                console.log(`YOU LOSE!  The puzzle was ${word}.\n`);
                 return;
             }
-
         }
     });
 }
@@ -95,7 +111,7 @@ Command Line Hangman!
 Instructions: 
 Choose letters. You get only
 ${maxIncorrect} incorrect responses
-befor you lose.  Good Luck! 
+before you lose.  Good Luck! 
 **************************
 
     `);
