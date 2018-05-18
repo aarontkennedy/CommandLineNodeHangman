@@ -1,4 +1,7 @@
-exports.Letter = function (l) {
+
+module.exports = Letter;
+
+function Letter (l) {
   const value = l.toUpperCase()[0];
   let isGuessed = false; 
 
@@ -32,7 +35,7 @@ exports.Letter = function (l) {
 if (require.main === module) {
   console.log('called directly');
 
-  let test = new exports.Letter("a");
+  let test = new Letter("a");
   console.log(test + "");
   test.checkGuess("b");
   console.log(test + "");

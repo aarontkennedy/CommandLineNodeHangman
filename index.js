@@ -1,4 +1,4 @@
-const Phrase = require("./Phrase").Phrase;
+const Phrase = require("./Phrase");
 const prompt = require('prompt');
 
 //

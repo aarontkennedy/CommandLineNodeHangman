@@ -1,6 +1,8 @@
-const Letter = require("./Letter").Letter;
+const Letter = require("./Letter");
 
-exports.Phrase = function (p) {
+module.exports = Phrase;
+
+function Phrase (p) {
     const phrase = p.toUpperCase();
 
     let letterArray = [];
